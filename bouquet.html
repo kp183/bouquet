@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Virtual Bouquet for My Love 💐</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #fff0f6, #ffe6f0);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      color: #d63384;
+      padding-top: 30px;
+      font-size: 2.5rem;
+    }
+
+    .bouquet {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .flower {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      animation: bloom 1s ease-out forwards;
+      transform: scale(0);
+      cursor: pointer;
+    }
+
+    .flower .petal {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(circle at 50% 30%, #ff69b4, #d63384);
+      border-radius: 50%;
+      transform-origin: center;
+    }
+
+    .flower .petal:nth-child(1) { transform: rotate(0deg) translateY(-25px); }
+    .flower .petal:nth-child(2) { transform: rotate(72deg) translateY(-25px); }
+    .flower .petal:nth-child(3) { transform: rotate(144deg) translateY(-25px); }
+    .flower .petal:nth-child(4) { transform: rotate(216deg) translateY(-25px); }
+    .flower .petal:nth-child(5) { transform: rotate(288deg) translateY(-25px); }
+
+    .flower .center {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: yellow;
+      border-radius: 50%;
+      top: 30px;
+      left: 30px;
+      z-index: 1;
+    }
+
+    @keyframes bloom {
+      to {
+        transform: scale(1);
+      }
+    }
+
+    .message-box {
+      margin: 30px auto;
+      background: #ffe4ec;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      display: none;
+      font-size: 1.2rem;
+      color: #d63384;
+    }
+
+    .love-letter {
+      margin: 40px auto;
+      background: #fff0f6;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.5);
+      color: #800040;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      margin: 40px 0;
+    }
+
+    /* Falling Petals */
+    .petal {
+      position: fixed;
+      top: -20px;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: fall 10s linear infinite;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>💐 A Virtual Bouquet Just for You 💖</h1>
+
+  <div class="bouquet" id="bouquet"></div>
+
+  <div class="message-box" id="messageBox"></div>
+
+  <!-- Love Letter -->
+  <div class="love-letter">
+    <h2>💌 A Letter From My Heart</h2>
+    <p>
+      My dearest love,<br><br>
+      Even though we're apart, my heart is always with you.  
+      Each flower here holds a little message — a piece of my love, blooming just for you.<br><br>
+      One day soon, we’ll be together again. Until then, let this bouquet remind you how deeply you're loved.<br><br>
+      Yours forever,<br>
+      ❤️ Kunal
+    </p>
+  </div>
+
+  <footer>
+    Made with 🌸 and 💕 by someone who misses you every single day
+  </footer>
+
+  <!-- Falling Petals Script -->
+  <script>
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = 5 + Math.random() * 5 + 's';
+      petal.style.background = ['#ffb6c1', '#ffc0cb', '#ff69b4'][Math.floor(Math.random() * 3)];
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }
+    setInterval(createPetal, 300);
+  </script>
+
+  <!-- Audio Element (Hidden) -->
+  <audio id="loveSong" src="Stephen Sanchez - Until I Found You (Official Video) - StephenSanchezVEVO.mp3"></audio>
+
+  <!-- Flower + Message + Music Script -->
+  <script>
+    const messages = [
+      "You’re my sunshine on cloudy days ☀️",
+      "Your smile is my favorite thing 🌸",
+      "You make my heart bloom 💖",
+      "Every moment with you is a treasure 💫",
+      "Click here for your surprise 🎵", // Music here
+      "You're my forever and always 🌹",
+      "Even the stars envy your glow ✨",
+      "One day closer to seeing you 💌",
+      "You're my person, my peace, my home 🏡",
+      "I love you endlessly 💞"
+    ];
+
+    const bouquet = document.getElementById('bouquet');
+    const messageBox = document.getElementById('messageBox');
+    const loveSong = document.getElementById('loveSong');
+
+    messages.forEach((msg, i) => {
+      const flower = document.createElement('div');
+      flower.className = 'flower';
+
+      // Add petals
+      for (let j = 0; j < 5; j++) {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        flower.appendChild(petal);
+      }
+
+      // Add yellow center
+      const center = document.createElement('div');
+      center.className = 'center';
+      flower.appendChild(center);
+
+      flower.addEventListener('click', () => {
+        messageBox.style.display = 'block';
+        messageBox.innerHTML = msg;
+
+        if (i === 4) {
+          loveSong.play();
+          messageBox.innerHTML += `<br><br><strong>🎶 Playing: Until I Found You 🎶</strong>`;
+        }
+      });
+
+      bouquet.appendChild(flower);
+    });
+  </script>
+</body>
+</html>
