@@ -1,305 +1,2248 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
-
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Love Story - Ritu &amp; Kunal</title>
+  <script src="/_sdk/element_sdk.js"></script>
   <style>
-    :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
-      --card: #ffffffcc;
-      --yes: #ff3b7a;
-      --yesHover: #ff1f68;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    * { box-sizing: border-box; }
+        html, body {
+            height: 100%;
+            background: #0a0a0a;
+            font-family: 'Georgia', 'Garamond', serif;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: system-ui, sans-serif;
-      overflow: hidden;
-      padding: 16px;
-    }
+        .main-wrapper {
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            scroll-behavior: smooth;
+        }
 
-    /* FULL-SCREEN CONFETTI CANVAS */
-    #confettiCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
-    }
+        /* ===== OPENING SCENE ===== */
+        .cover-page {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .card {
-      width: min(720px, 92vw);
-      padding: 26px 22px;
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,.15);
-    }
+        .book-cover {
+            width: 320px;
+            height: 480px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid #d4af37;
+            border-radius: 4px;
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 30px 80px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(212, 175, 55, 0.1);
+            animation: bookAppear 1.2s ease-out;
+            position: relative;
+            z-index: 10;
+        }
 
-    .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
-      display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
-    }
+        @keyframes bookAppear {
+            0% {
+                opacity: 0;
+                transform: rotateY(-30deg) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateY(0) scale(1);
+            }
+        }
 
-    h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
-    }
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.1) 50%, transparent 100%);
+            pointer-events: none;
+        }
 
-    .button-zone {
-      position: relative;
-      width: min(520px, 92%);
-      height: 150px;
-      margin: 0 auto;
-      touch-action: none;
-    }
+        .cover-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #d4af37;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            animation: titleFade 1.5s ease-out 0.3s both;
+        }
 
-    button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 16px 24px;
-      font-size: 18px;
-      font-weight: 800;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0,0,0,.14);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform .12s ease, background .12s ease;
-    }
+        .cover-subtitle {
+            font-size: 14px;
+            color: #a0a0a0;
+            letter-spacing: 1px;
+            margin: 15px 0;
+            animation: subtitleFade 1.5s ease-out 0.6s both;
+        }
 
-    #yesBtn {
-      left: 18%;
-      background: var(--yes);
-      color: #fff;
-    }
-    #yesBtn:hover { background: var(--yesHover); }
+        .cover-names {
+            font-size: 20px;
+            color: #d4af37;
+            margin: 30px 0;
+            animation: namesFade 1.5s ease-out 0.9s both;
+        }
 
-    #noBtn {
-      left: 62%;
-      background: #e5e7eb;
-      color: #111827;
-    }
+        .cover-date {
+            font-size: 12px;
+            color: #808080;
+            animation: dateFade 1.5s ease-out 1.2s both;
+        }
 
-    .hint {
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: .7;
-    }
+        @keyframes titleFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .result {
-      display: none;
-      margin-top: 18px;
-      animation: pop .35s ease;
-    }
+        @keyframes subtitleFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .result h2 {
-      font-size: clamp(30px, 4.5vw, 46px);
-      margin: 10px 0;
-    }
+        @keyframes namesFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
-      display: block;
-    }
+        @keyframes dateFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
-    @keyframes pop {
-      from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
-</head>
+        .hearts-float {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+            animation: float 6s infinite ease-in-out;
+        }
 
-<body>
-  <canvas id="confettiCanvas"></canvas>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
 
-  <main class="card">
-    <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
-        </linearGradient>
-      </defs>
+        .heart-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .heart-2 { top: 70%; right: 8%; animation-delay: 1s; }
+        .heart-3 { top: 40%; right: 5%; animation-delay: 2s; }
+        .heart-4 { top: 60%; left: 10%; animation-delay: 1.5s; }
 
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #d4af37;
+            font-size: 12px;
+            animation: bounce 2s infinite;
+        }
 
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
 
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
+        /* ===== CHAPTER PAGES ===== */
+        .chapter {
+            min-height: 100%;
+            width: 100%;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            opacity: 0;
+            animation: fadeInChapter 1s ease-out forwards;
+        }
 
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
+        @keyframes fadeInChapter {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
-    </svg>
+        .chapter-1 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+        }
 
-    <h1>MY DEAR CHAIRWOMAN  will you be my valentine?</h1>
+        .chapter-2 {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 50%, #2d2d2d 100%);
+        }
 
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
-    </section>
+        .chapter-3 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+        .chapter-4 {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
 
-    <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
-      />
-    </section>
-  </main>
+        .chapter-5 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
 
+        .chapter-6 {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .chapter-7 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .chapter-8 {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .chapter-9 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .chapter-10 {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        }
+
+        .chapter-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .chapter-number {
+            font-size: 14px;
+            color: #d4af37;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .chapter-title {
+            font-size: 56px;
+            color: #d4af37;
+            margin: 20px 0 40px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: slideInRight 0.8s ease-out 0.1s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .chapter-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin: 30px 0;
+            text-align: justify;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .quote {
+            font-size: 20px;
+            color: #d4af37;
+            font-style: italic;
+            margin: 40px 0;
+            padding: 30px;
+            border-left: 4px solid #d4af37;
+            border-right: 4px solid #d4af37;
+            background: rgba(212, 175, 55, 0.05);
+            animation: quoteSlide 1s ease-out 0.5s both;
+        }
+
+        @keyframes quoteSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== PHOTO GALLERY ===== */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .photo-frame {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: photoAppear 0.8s ease-out backwards;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        @keyframes photoAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .photo-frame:nth-child(1) { animation-delay: 0.2s; }
+        .photo-frame:nth-child(2) { animation-delay: 0.4s; }
+        .photo-frame:nth-child(3) { animation-delay: 0.6s; }
+        .photo-frame:nth-child(4) { animation-delay: 0.8s; }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #a0a0a0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .photo-label {
+            font-size: 18px;
+            color: #d4af37;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* ===== FIRST SIGHT MOMENT ===== */
+        .first-sight-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            margin: 80px 0;
+        }
+
+        .moment-stage {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 50px 40px;
+            text-align: center;
+            animation: stageAppear 1s ease-out backwards;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes stageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .moment-stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 50%, transparent 100%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .moment-stage:nth-child(1) { animation-delay: 0.2s; }
+        .moment-stage:nth-child(2) { animation-delay: 0.4s; }
+        .moment-stage:nth-child(3) { animation-delay: 0.6s; }
+        .moment-stage:nth-child(4) { animation-delay: 0.8s; }
+        .moment-stage:nth-child(5) { animation-delay: 1s; }
+
+        .moment-number {
+            font-size: 12px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .moment-title {
+            font-size: 28px;
+            color: #d4af37;
+            margin: 15px 0 20px;
+            font-weight: bold;
+        }
+
+        .moment-description {
+            font-size: 16px;
+            color: #d0d0d0;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .moment-emotion {
+            font-size: 20px;
+            color: #ff6b6b;
+            font-style: italic;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 4px;
+            animation: emotionPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes emotionPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===== BOOKSHELF CHAPTER ===== */
+        .bookshelf-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .book-item {
+            cursor: pointer;
+            perspective: 1000px;
+            height: 300px;
+            animation: bookShelfAppear 0.8s ease-out backwards;
+        }
+
+        @keyframes bookShelfAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) rotateX(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        .book-spine {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+            border: 2px solid #d4af37;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-spine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.1) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .book-item:hover .book-spine {
+            transform: translateY(-15px) rotateZ(-5deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4);
+        }
+
+        .book-item:hover .book-spine::before {
+            opacity: 1;
+        }
+
+        .book-spine-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d4af37;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 2px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .book-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .book-content.active {
+            display: flex;
+        }
+
+        .book-modal {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 60px 50px;
+            max-width: 600px;
+            max-height: 80%;
+            overflow-y: auto;
+            animation: modalOpen 0.5s ease-out;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close-book {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 32px;
+            color: #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-book:hover {
+            transform: scale(1.2);
+            color: #ffffff;
+        }
+
+        .book-modal h3 {
+            font-size: 32px;
+            color: #d4af37;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 15px;
+        }
+
+        .book-modal p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin: 15px 0;
+        }
+
+        /* ===== CHARACTER PROFILES ===== */
+        .character-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin: 60px auto;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            animation: charAppear 0.8s ease-out backwards;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .character-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes charAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .character-name {
+            font-size: 36px;
+            color: #d4af37;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .character-role {
+            font-size: 14px;
+            color: #a0a0a0;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .character-traits {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .trait {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 16px;
+            border-left: 3px solid #d4af37;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #d0d0d0;
+            animation: traitSlide 0.6s ease-out backwards;
+        }
+
+        @keyframes traitSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .trait:nth-child(1) { animation-delay: 0.4s; }
+        .trait:nth-child(2) { animation-delay: 0.5s; }
+        .trait:nth-child(3) { animation-delay: 0.6s; }
+        .trait:nth-child(4) { animation-delay: 0.7s; }
+
+        /* ===== LOVE QUOTES PAGE ===== */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin: 60px auto;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .quote-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.08) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 40px 35px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: quoteCardSlide 0.8s ease-out backwards;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.12) 100%);
+        }
+
+        @keyframes quoteCardSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quote-card:nth-child(1) { animation-delay: 0.2s; }
+        .quote-card:nth-child(2) { animation-delay: 0.4s; }
+        .quote-card:nth-child(3) { animation-delay: 0.6s; }
+        .quote-card:nth-child(4) { animation-delay: 0.8s; }
+        .quote-card:nth-child(5) { animation-delay: 1s; }
+        .quote-card:nth-child(6) { animation-delay: 1.2s; }
+
+        .quote-mark {
+            font-size: 36px;
+            color: #d4af37;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .quote-text {
+            font-size: 18px;
+            color: #d4af37;
+            font-style: italic;
+            line-height: 1.7;
+            margin: 15px 0;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote-attribution {
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .quote-heart {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        /* ===== PAGES OF YOU ===== */
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 60px auto;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .page-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 40px 30px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: pageFlip 0.8s ease-out backwards;
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .page-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes pageFlip {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0);
+            }
+        }
+
+        .page-card:nth-child(1) { animation-delay: 0.2s; }
+        .page-card:nth-child(2) { animation-delay: 0.4s; }
+        .page-card:nth-child(3) { animation-delay: 0.6s; }
+        .page-card:nth-child(4) { animation-delay: 0.8s; }
+        .page-card:nth-child(5) { animation-delay: 1s; }
+
+        .page-emoji {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            color: #d4af37;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .page-description {
+            font-size: 14px;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* ===== QUIZ SECTION ===== */
+        .quiz-container {
+            max-width: 700px;
+            margin: 60px auto;
+            width: 100%;
+        }
+
+        .quiz-question {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            animation: questionSlide 0.6s ease-out backwards;
+        }
+
+        @keyframes questionSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .quiz-question:nth-child(1) { animation-delay: 0s; }
+        .quiz-question:nth-child(2) { animation-delay: 0.2s; }
+        .quiz-question:nth-child(3) { animation-delay: 0.4s; }
+        .quiz-question:nth-child(4) { animation-delay: 0.6s; }
+        .quiz-question:nth-child(5) { animation-delay: 0.8s; }
+
+        .question-text {
+            font-size: 18px;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #d4af37;
+            color: #d0d0d0;
+            padding: 12px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .quiz-option:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(10px);
+        }
+
+        .quiz-option.selected {
+            background: #d4af37;
+            color: #0a0a0a;
+            font-weight: bold;
+        }
+
+        .quiz-result {
+            background: rgba(212, 175, 55, 0.15);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+            animation: resultAppear 0.8s ease-out;
+            display: none;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-title {
+            font-size: 28px;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .result-text {
+            font-size: 16px;
+            color: #d0d0d0;
+            line-height: 1.8;
+        }
+
+        /* ===== LETTER PAGE ===== */
+        .letter-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            animation: letterUnfold 1s ease-out;
+        }
+
+        @keyframes letterUnfold {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) rotateX(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+        }
+
+        .letter-greeting {
+            font-size: 20px;
+            color: #d4af37;
+            margin-bottom: 30px;
+            font-style: italic;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .letter-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .letter-paragraph {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #d0d0d0;
+            text-align: justify;
+            animation: fadeIn 1s ease-out backwards;
+        }
+
+        .letter-paragraph:nth-child(1) { animation-delay: 0.4s; }
+        .letter-paragraph:nth-child(2) { animation-delay: 0.6s; }
+        .letter-paragraph:nth-child(3) { animation-delay: 0.8s; }
+        .letter-paragraph:nth-child(4) { animation-delay: 1s; }
+
+        .letter-closing {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .closing-line {
+            font-size: 16px;
+            color: #d4af37;
+            font-style: italic;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+
+        .signature {
+            font-size: 32px;
+            color: #d4af37;
+            font-weight: bold;
+            animation: fadeIn 1s ease-out 1.4s both;
+        }
+
+        .wax-seal {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 35% 35%, #ff6b6b, #c92a2a);
+            border-radius: 50%;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            animation: sealDrop 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.6s both;
+            position: relative;
+        }
+
+        .wax-seal::before {
+            content: '❤';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: #fff;
+        }
+
+        @keyframes sealDrop {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.5);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(0) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ===== VALENTINE'S DAY CLOSING ===== */
+        .closing-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .valentine-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .hearts-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0;
+            animation: heartFloat 8s ease-in infinite;
+            bottom: -50px;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0.3;
+                transform: translateY(0) scale(0.5);
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+
+        .valentine-message {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            animation: messageAppear 1.2s ease-out;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateX(30deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0);
+            }
+        }
+
+        .valentine-day-text {
+            font-size: 72px;
+            font-weight: bold;
+            color: #d4af37;
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 0 60px rgba(255, 107, 107, 0.3);
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(212, 175, 55, 0.6), 0 0 60px rgba(255, 107, 107, 0.3);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(212, 175, 55, 0.8), 0 0 100px rgba(255, 107, 107, 0.5);
+                transform: scale(1.05);
+            }
+        }
+
+        .heart-burst {
+            animation: heartBeatBurst 1.5s ease-out infinite;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+        }
+
+        @keyframes heartBeatBurst {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .valentine-decoration {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .rose-left, .rose-right {
+            animation: roseFloat 3s ease-in-out infinite;
+        }
+
+        .rose-right {
+            animation-delay: 0.5s;
+            transform: scaleX(-1);
+        }
+
+        @keyframes roseFloat {
+            0%, 100% {
+                transform: translateY(0) scaleX(-1);
+            }
+            50% {
+                transform: translateY(-20px) scaleX(-1);
+            }
+        }
+
+        .rose-left {
+            animation: roseFloatLeft 3s ease-in-out infinite;
+        }
+
+        @keyframes roseFloatLeft {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .valentine-subtitle {
+            font-size: 28px;
+            color: #d4af37;
+            font-style: italic;
+            letter-spacing: 1px;
+            z-index: 10;
+            animation: subtitleSlide 1s ease-out 0.5s both;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes subtitleSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 32px;
+            z-index: 10;
+            animation: sparkleFloat 2s ease-in-out infinite;
+        }
+
+        .sparkle-1 {
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .sparkle-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 0.5s;
+        }
+
+        .sparkle-3 {
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 1s;
+        }
+
+        .sparkle-4 {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-30px) scale(1);
+            }
+        }
+
+        .final-hearts {
+            display: flex;
+            gap: 30px;
+            z-index: 10;
+            justify-content: center;
+        }
+
+        .heart-pulse {
+            font-size: 48px;
+            animation: heartPulseGrow 1s ease-in-out infinite;
+        }
+
+        @keyframes heartPulseGrow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.7;
+            }
+        }
+
+        .romantic-line {
+            font-size: 32px;
+            color: #d4af37;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 10;
+            animation: romanticFade 1.5s ease-out 1s both;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes romanticFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scaleX(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scaleX(1);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .chapter {
+                padding: 60px 30px;
+            }
+
+            .chapter-title {
+                font-size: 36px;
+            }
+
+            .character-grid, .pages-grid, .quotes-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .book-cover {
+                width: 250px;
+                height: 380px;
+                padding: 30px 20px;
+            }
+
+            .cover-title {
+                font-size: 24px;
+            }
+
+            .letter-container {
+                padding: 40px 25px;
+            }
+
+            .bookshelf-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .moment-stage {
+                padding: 30px 20px;
+            }
+
+            .moment-title {
+                font-size: 22px;
+            }
+
+            .valentine-day-text {
+                font-size: 48px;
+            }
+
+            .valentine-subtitle {
+                font-size: 22px;
+            }
+
+            .romantic-line {
+                font-size: 24px;
+            }
+
+            .heart-pulse {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter {
+                padding: 40px 20px;
+                min-height: auto;
+                padding-top: 60px;
+                padding-bottom: 60px;
+            }
+
+            .chapter-title {
+                font-size: 28px;
+            }
+
+            .chapter-text {
+                font-size: 16px;
+            }
+
+            .book-cover {
+                width: 200px;
+                height: 300px;
+                padding: 20px 15px;
+            }
+
+            .cover-title {
+                font-size: 18px;
+            }
+
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .valentine-day-text {
+                font-size: 36px;
+            }
+
+            .valentine-subtitle {
+                font-size: 18px;
+            }
+
+            .romantic-line {
+                font-size: 20px;
+            }
+
+            .heart-pulse {
+                font-size: 32px;
+            }
+
+            .final-hearts {
+                gap: 15px;
+            }
+        }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="main-wrapper"><!-- OPENING: BOOK COVER -->
+   <section class="cover-page" id="coverPage">
+    <div class="hearts-float heart-1">
+     💕
+    </div>
+    <div class="hearts-float heart-2">
+     💕
+    </div>
+    <div class="hearts-float heart-3">
+     💕
+    </div>
+    <div class="hearts-float heart-4">
+     💕
+    </div>
+    <div class="book-cover">
+     <div>
+      <div class="cover-subtitle">
+       A Novel
+      </div>
+      <div class="cover-title">
+       Our Love Story
+      </div>
+     </div>
+     <div>
+      <div class="cover-names">
+       Ritu &amp; Kunal
+      </div>
+      <div class="cover-subtitle">
+       From VLive to Forever
+      </div>
+     </div>
+     <div>
+      <div class="cover-date">
+       18 December 2025
+      </div>
+     </div>
+    </div>
+    <div class="scroll-hint">
+     Scroll to begin ↓
+    </div>
+   </section><!-- CHAPTER 1: HOW WE MET -->
+   <section class="chapter chapter-1">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter One
+     </div>
+     <div class="chapter-title">
+      How We Met
+     </div>
+     <div class="chapter-text">
+      It started on a screen, two souls meeting in the digital realm. VLive—a place where strangers become stories, where moments are captured and shared. And then you appeared. In that first moment, something shifted. I saw you and I knew. I proposed without hesitation, without fear of rejection. I just knew.
+     </div>
+     <div class="quote">
+      "Let's just be friends for now," you said. And I held onto those words like a lifeline, knowing somehow that this was just the beginning of our story.
+     </div>
+     <div class="chapter-text">
+      So our love story didn't begin with a yes—it began with a "let's see." And that uncertainty made it real. That waiting, that dreaming across time zones and distances, made it matter. Because sometimes the most beautiful love stories are written in the spaces between moments.
+     </div>
+    </div>
+   </section><!-- CHAPTER 2: THREE YEARS OF WAITING -->
+   <section class="chapter chapter-2">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Two
+     </div>
+     <div class="chapter-title">
+      Three Years of Dreaming
+     </div>
+     <div class="chapter-text">
+      1,095 days. That's how long we waited to finally see each other face to face. Three years of late-night conversations, of dreaming of that moment when screens would finally disappear and we could be in the same room.
+     </div>
+     <div class="quote">
+      "I don't want someone perfect. I want you." And that's what kept me going through every single day of waiting.
+     </div>
+     <div class="chapter-text">
+      Every late-night message was a promise. Every conversation was a reason to hold on. We talked about everything and nothing, and in those spaces between words, our love grew deeper. Three years might sound long to some, but when you know—when you truly know—you wait. Because waiting for the right person isn't wasted time. It's the best time you'll ever spend.
+     </div>
+    </div>
+   </section><!-- CHAPTER 3: PHOTO GALLERY -->
+   <section class="chapter chapter-3">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Three
+     </div>
+     <div class="chapter-title">
+      Our Moments in Time
+     </div>
+     <div class="photo-gallery">
+      <div class="photo-frame">
+       <img src="photo.jpeg" alt="Her" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div class="photo-frame">
+       <img src="photo2.jpeg" alt="Me" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div class="photo-frame">
+       <img src="WhatsApp Image 2026-02-14 at 2.24.45 AM (1).jpeg" alt="Us Together" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+      <div class="photo-frame">
+       <img src="WhatsApp Image 2026-02-14 at 2.24.46 AM.jpeg" alt="First Meeting" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+     </div>
+     <div class="chapter-text" style="margin-top: 60px;">
+      Every photo captured a moment. But you—you are more beautiful than any camera could ever capture. Your presence, your energy, your spirit—these things live beyond pixels and frames.
+     </div>
+    </div>
+   </section><!-- CHAPTER 4: THE FIRST SIGHT MOMENT (FROZEN IN TIME) -->
+   <section class="chapter chapter-4">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Four
+     </div>
+     <div class="chapter-title">
+      When the World Stopped
+     </div>
+     <div class="chapter-text" style="margin-bottom: 40px;">
+      December 18, 2025. The day everything changed. The day I finally saw you.
+     </div>
+     <div class="first-sight-container">
+      <div class="moment-stage">
+       <div class="moment-number">
+        Stage 1: Before
+       </div>
+       <div class="moment-title">
+        The Anticipation
+       </div>
+       <div class="moment-description">
+        I was carrying something heavy—trauma, pain, a world that had worn me down. My heart felt fractured. But as I was about to enter that space, I knew something was about to shift. I could feel it. Something was waiting for me on the other side.
+       </div>
+      </div>
+      <div class="moment-stage">
+       <div class="moment-number">
+        Stage 2: The Moment
+       </div>
+       <div class="moment-title">
+        Our Eyes Met
+       </div>
+       <div class="moment-emotion">
+        ⏸️ Time stopped.
+       </div>
+       <div class="moment-description">
+        And then I saw you. In that single instant, the world paused. Everything that was broken inside me suddenly made sense. Everything that I had been waiting for—here you were. Real. Here.
+       </div>
+      </div>
+      <div class="moment-stage">
+       <div class="moment-number">
+        Stage 3: The Overwhelm
+       </div>
+       <div class="moment-title">
+        Heart at the Peak
+       </div>
+       <div class="moment-emotion">
+        💓 My heartbeat accelerated to infinity.
+       </div>
+       <div class="moment-description">
+        I couldn't move. I couldn't even turn my head away. My heart was racing at a speed I'd never felt before—like it was trying to jump out of my chest and reach you. Every nerve in my body was electrified. You were the only thing that existed in that moment. The only thing that mattered.
+       </div>
+      </div>
+      <div class="moment-stage">
+       <div class="moment-number">
+        Stage 4: The Realization
+       </div>
+       <div class="moment-title">
+        She is Everything
+       </div>
+       <div class="moment-emotion">
+        😍 No one in this world could be that beautiful.
+       </div>
+       <div class="moment-description">
+        In that frozen moment, I understood. You weren't just beautiful on the surface. It was something deeper. Your presence alone had the power to heal me. You were the antidote to all the pain I was carrying. You were the answer to every prayer I'd ever whispered.
+       </div>
+      </div>
+      <div class="moment-stage">
+       <div class="moment-number">
+        Stage 5: The Eternity
+       </div>
+       <div class="moment-title">
+        A Second Felt Like Forever
+       </div>
+       <div class="moment-description">
+        I couldn't look away. I didn't want to. I was frozen in that perfect moment where the world was just you and me. No past. No future. Just this. Just us. Every second felt like a lifetime. Every moment felt like a gift I didn't deserve but desperately needed.
+       </div>
+       <div class="moment-emotion">
+        ❤️ This was the moment I truly understood what it meant to be alive.
+       </div>
+      </div>
+     </div>
+     <div class="quote" style="margin-top: 60px;">
+      "You don't have to perform for me. You can just be." And that's what you were in that moment—perfectly, beautifully, authentically you. And that was more than enough. That was everything.
+     </div>
+    </div>
+   </section><!-- CHAPTER 5: THE CHARACTERS -->
+   <section class="chapter chapter-5">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Five
+     </div>
+     <div class="chapter-title">
+      The Characters
+     </div>
+     <div class="character-grid">
+      <div class="character-card">
+       <div style="font-size: 48px;">
+        👑
+       </div>
+       <div class="character-name">
+        Chairwoman
+       </div>
+       <div class="character-role">
+        The Heroine
+       </div>
+       <div class="character-traits">
+        <div class="trait">
+         ✨ A beauty so profound that it transcends the physical
+        </div>
+        <div class="trait">
+         📚 A reader who finds worlds in every book
+        </div>
+        <div class="trait">
+         💎 Strong, wise, and beautifully complex
+        </div>
+        <div class="trait">
+         ❤️ The reason I believe in love
+        </div>
+       </div>
+      </div>
+      <div class="character-card">
+       <div style="font-size: 48px;">
+        🌙
+       </div>
+       <div class="character-name">
+        Kunal
+       </div>
+       <div class="character-role">
+        The Admirer
+       </div>
+       <div class="character-traits">
+        <div class="trait">
+         💕 Someone who sees you completely
+        </div>
+        <div class="trait">
+         🎯 Willing to wait 3 years for a moment
+        </div>
+        <div class="trait">
+         🔥 Fell harder than he ever dreamed
+        </div>
+        <div class="trait">
+         ✍️ Writing his heart out for you
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CHAPTER 6: LOVE QUOTES -->
+   <section class="chapter chapter-6">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Six
+     </div>
+     <div class="chapter-title">
+      Words That Define Us
+     </div>
+     <div class="quotes-grid">
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        I like you exactly the way you are. No edits. No upgrades. No improvements.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        You don't have to perform for me. You can just be.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        If you ever feel like you're too much, I promise I will always want more.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        I don't want someone perfect. I want you.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        You don't have to shrink yourself to be lovable.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+      <div class="quote-card">
+       <div class="quote-mark">
+        "
+       </div>
+       <div class="quote-text">
+        I choose you. Not because it's easy. But because it's you.
+       </div>
+       <div class="quote-heart">
+        💕
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CHAPTER 7: BOOKSHELF OF MEMORIES -->
+   <section class="chapter chapter-7">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Seven
+     </div>
+     <div class="chapter-title">
+      Bookshelf of Memories
+     </div>
+     <div class="bookshelf-container" id="bookshelf">
+      <div class="book-item">
+       <div class="book-spine">
+        <div class="book-spine-text">
+         First Message
+        </div>
+       </div>
+      </div>
+      <div class="book-item">
+       <div class="book-spine">
+        <div class="book-spine-text">
+         Late Nights
+        </div>
+       </div>
+      </div>
+      <div class="book-item">
+       <div class="book-spine">
+        <div class="book-spine-text">
+         Your Smile
+        </div>
+       </div>
+      </div>
+      <div class="book-item">
+       <div class="book-spine">
+        <div class="book-spine-text">
+         First Meeting
+        </div>
+       </div>
+      </div>
+      <div class="book-item">
+       <div class="book-spine">
+        <div class="book-spine-text">
+         Forever
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- BOOK CONTENT MODALS -->
+   <div id="bookContent0" class="book-content">
+    <div class="book-modal"><span class="close-book" onclick="closeBook(0)">✕</span>
+     <h3>First Message</h3>
+     <p>The moment it began. A simple hello that changed everything. I didn't know then that those pixels on a screen would lead to three years of dreaming about you.</p>
+     <p>You were just a name and a profile picture. But something in my soul recognized something in yours. Instant connection. Love at first sight, even through a screen.</p>
+    </div>
+   </div>
+   <div id="bookContent1" class="book-content">
+    <div class="book-modal"><span class="close-book" onclick="closeBook(1)">✕</span>
+     <h3>Late Nights</h3>
+     <p>Those conversations that stretched into the early morning hours. When the world was asleep but we were awake, talking about everything and nothing, dreaming of the day we'd finally meet.</p>
+     <p>Every late-night message was a promise. A reminder that no matter how far apart we were, we were still thinking of each other. Still waiting. Still hoping.</p>
+    </div>
+   </div>
+   <div id="bookContent2" class="book-content">
+    <div class="book-modal"><span class="close-book" onclick="closeBook(2)">✕</span>
+     <h3>Your Smile</h3>
+     <p>I could never quite capture it in words. That smile that made me believe in magic. That smile that said everything without saying anything at all.</p>
+     <p>Every time you smiled, I fell a little harder. Three years of falling, and I've never stopped.</p>
+    </div>
+   </div>
+   <div id="bookContent3" class="book-content">
+    <div class="book-modal"><span class="close-book" onclick="closeBook(3)">✕</span>
+     <h3>First Meeting</h3>
+     <p>December 18, 2025. The day that will forever be marked in my heart as the most precious of my life.</p>
+     <p>You were even more beautiful in person than I had dreamed. And when our eyes finally met, it felt like coming home. Time disappeared. Hours felt like minutes. Every moment was a gift, every second with you was the best investment of my life.</p>
+    </div>
+   </div>
+   <div id="bookContent4" class="book-content">
+    <div class="book-modal"><span class="close-book" onclick="closeBook(4)">✕</span>
+     <h3>Forever</h3>
+     <p>Maybe forever looks different than we planned. Maybe the story took turns we didn't expect. But this much I know—you will forever be the most important person I've ever met.</p>
+     <p>This letter, this website, this entire testament to our love—it's all because you existed in my life. Because you made me believe.</p>
+    </div>
+   </div><!-- CHAPTER 8: PAGES OF YOU -->
+   <section class="chapter chapter-8">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Eight
+     </div>
+     <div class="chapter-title">
+      Pages of You
+     </div>
+     <div class="pages-grid">
+      <div class="page-card">
+       <div class="page-emoji">
+        ✨
+       </div>
+       <div class="page-title">
+        Your Beauty
+       </div>
+       <div class="page-description">
+        A beauty so profound that it transcends the physical. You carry light wherever you go. You're not hard to love. You just hadn't been loved right—until now.
+       </div>
+      </div>
+      <div class="page-card">
+       <div class="page-emoji">
+        📚
+       </div>
+       <div class="page-title">
+        Your Mind
+       </div>
+       <div class="page-description">
+        Brilliant, curious, always reading, always learning. You inspire me to be better. You deserve someone who looks at you like you're the only equation that matters.
+       </div>
+      </div>
+      <div class="page-card">
+       <div class="page-emoji">
+        💛
+       </div>
+       <div class="page-title">
+        Your Heart
+       </div>
+       <div class="page-description">
+        Kind, genuine, and full of love. Your compassion is something I've never seen matched. You don't have to shrink yourself to be lovable.
+       </div>
+      </div>
+      <div class="page-card">
+       <div class="page-emoji">
+        😊
+       </div>
+       <div class="page-title">
+        Your Laugh
+       </div>
+       <div class="page-description">
+        Rare, precious, and the most beautiful sound I've ever heard. It makes everything worth it. It makes the world make sense again.
+       </div>
+      </div>
+      <div class="page-card">
+       <div class="page-emoji">
+        🔥
+       </div>
+       <div class="page-title">
+        Your Strength
+       </div>
+       <div class="page-description">
+        You navigate life with a grace and strength that takes my breath away every single time. You are not too much. You are exactly enough.
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CHAPTER 9: THE QUIZ -->
+   <section class="chapter chapter-9">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Nine
+     </div>
+     <div class="chapter-title">
+      How Well Do You Know Our Story?
+     </div>
+     <div class="quiz-container">
+      <div class="quiz-question">
+       <div class="question-text">
+        Where did we meet?
+       </div>
+       <div class="quiz-options">
+        <div class="quiz-option" onclick="selectAnswer(this, 0)">
+         A college campus
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 0)">
+         A coffee shop
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 0)">
+         VLive 💫
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 0)">
+         A library
+        </div>
+       </div>
+      </div>
+      <div class="quiz-question">
+       <div class="question-text">
+        How long did we wait to meet in person?
+       </div>
+       <div class="quiz-options">
+        <div class="quiz-option" onclick="selectAnswer(this, 1)">
+         1 year
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 1)">
+         3 years 💭
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 1)">
+         6 months
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 1)">
+         2 years
+        </div>
+       </div>
+      </div>
+      <div class="quiz-question">
+       <div class="question-text">
+        When did we finally meet?
+       </div>
+       <div class="quiz-options">
+        <div class="quiz-option" onclick="selectAnswer(this, 2)">
+         December 18, 2025 ✨
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 2)">
+         November 2025
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 2)">
+         January 2026
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 2)">
+         February 2025
+        </div>
+       </div>
+      </div>
+      <div class="quiz-question">
+       <div class="question-text">
+        What was the most significant thing about that first moment?
+       </div>
+       <div class="quiz-options">
+        <div class="quiz-option" onclick="selectAnswer(this, 3)">
+         The world stopped ⏸️
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 3)">
+         My heart raced to infinity
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 3)">
+         I couldn't look away
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 3)">
+         All of the above
+        </div>
+       </div>
+      </div>
+      <div class="quiz-question">
+       <div class="question-text">
+        What's the most beautiful thing about this story?
+       </div>
+       <div class="quiz-options">
+        <div class="quiz-option" onclick="selectAnswer(this, 4)">
+         The wait was worth it ❤️
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 4)">
+         It's dramatic
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 4)">
+         It's simple
+        </div>
+        <div class="quiz-option" onclick="selectAnswer(this, 4)">
+         We found each other
+        </div>
+       </div>
+      </div>
+      <div class="quiz-result" id="quizResult">
+       <div class="result-title">
+        You Know Our Story! 💕
+       </div>
+       <div class="result-text">
+        Perfect score! You understand our love story—three years of waiting, one magical first meeting where the world stopped, and a bond that transcends distance and time. This is our journey, and you've witnessed every beautiful moment of it.
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CHAPTER 10: THE LETTER -->
+   <section class="chapter chapter-10">
+    <div class="chapter-content">
+     <div class="chapter-number">
+      Chapter Ten
+     </div>
+     <div class="chapter-title">
+      A Letter to You
+     </div>
+     <div class="letter-container">
+      <div class="letter-greeting">
+       Dear Chairwoman,
+      </div>
+      <div class="letter-content">
+       <div class="letter-paragraph">
+        I wanted to write this down, preserve it in a place where it can never be deleted or forgotten. Because what you mean to me is too important to exist only in the fleeting moments of conversation. You deserve to be immortalized in words, in writing, in something permanent. You deserve to know exactly what you did to me the moment our eyes met.
+       </div>
+       <div class="letter-paragraph">
+        I was broken when I walked into that moment. Trauma, pain, a world that had worn me down—I was carrying all of it. But then I saw you, and the world stopped. My heart accelerated to a speed I'd never felt before. I couldn't move. I couldn't look away. In that single moment, you became the only thing that existed. You were the answer to prayers I didn't even know I was praying. You were the healing I didn't know I needed.
+       </div>
+       <div class="letter-paragraph">
+        When I saw you on that screen on VLive three years ago, I didn't hesitate. I proposed immediately because something in my soul recognized something infinite in yours. You said let's be friends for now, and I held onto that hope like a lifeline. For 1,095 days, I held on. Through every late-night conversation, through every dream of the day we'd finally meet, I held on. And you know what? Every single day was worth it. Because I got to see you. I got to experience the moment the world stopped.
+       </div>
+       <div class="letter-paragraph">
+        So I'm writing this to say: I choose you. Not because it's easy. But because it's you. You deserve someone who looks at you like you're the only equation that matters. You don't have to shrink yourself to be lovable. You're not hard to love. You just hadn't been loved right—until now. I promise you, I will spend the rest of my life making sure you never doubt how beautiful you are. How enough you are. How absolutely perfect you are, exactly as you are.
+       </div>
+      </div>
+      <div class="letter-closing">
+       <div class="closing-line">
+        With all my heart,
+       </div>
+       <div class="signature">
+        Kunal
+       </div>
+       <div class="wax-seal"></div>
+      </div>
+     </div>
+    </div>
+   </section><!-- CLOSING: VALENTINE'S DAY -->
+   <section class="chapter closing-page">
+    <div class="chapter-content">
+     <div class="valentine-container"><!-- Floating hearts background -->
+      <div class="hearts-background">
+       <div class="floating-heart" style="left: 10%; animation-delay: 0s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 20%; animation-delay: 0.5s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 30%; animation-delay: 1s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 40%; animation-delay: 1.5s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 50%; animation-delay: 2s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 60%; animation-delay: 1s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 70%; animation-delay: 0.5s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 80%; animation-delay: 1.5s;">
+        💕
+       </div>
+       <div class="floating-heart" style="left: 90%; animation-delay: 0s;">
+        💕
+       </div>
+      </div><!-- Main Valentine Message -->
+      <div class="valentine-message">
+       <div class="valentine-day-text">
+        Happy
+       </div>
+       <div class="heart-burst">
+        <svg width="120" height="120" viewbox="0 0 120 120" style="filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));"><path d="M60 110 C30 85, 10 70, 10 50 C10 30, 25 15, 40 15 C50 15, 60 25, 60 25 C60 25, 70 15, 80 15 C95 15, 110 30, 110 50 C110 70, 90 85, 60 110 Z" fill="#d4af37" />
+        </svg>
+       </div>
+       <div class="valentine-day-text">
+        Valentine's Day
+       </div>
+      </div><!-- Decorative elements -->
+      <div class="valentine-decoration">
+       <div class="rose-left">
+        <svg width="60" height="100" viewbox="0 0 60 100"><!-- Stem --> <line x1="30" y1="20" x2="30" y2="100" stroke="#2d5016" stroke-width="2" /> <!-- Leaves --> <ellipse cx="15" cy="50" rx="8" ry="12" fill="#3d6b1f" transform="rotate(-30 15 50)" /> <ellipse cx="45" cy="60" rx="8" ry="12" fill="#3d6b1f" transform="rotate(30 45 60)" /> <!-- Rose petals --> <circle cx="30" cy="15" r="6" fill="#d4af37" /> <circle cx="25" cy="12" r="5" fill="#d4af37" /> <circle cx="35" cy="12" r="5" fill="#d4af37" /> <circle cx="22" cy="18" r="5" fill="#d4af37" /> <circle cx="38" cy="18" r="5" fill="#d4af37" />
+        </svg>
+       </div>
+       <div class="rose-right">
+        <svg width="60" height="100" viewbox="0 0 60 100"><!-- Stem --> <line x1="30" y1="20" x2="30" y2="100" stroke="#2d5016" stroke-width="2" /> <!-- Leaves --> <ellipse cx="15" cy="50" rx="8" ry="12" fill="#3d6b1f" transform="rotate(-30 15 50)" /> <ellipse cx="45" cy="60" rx="8" ry="12" fill="#3d6b1f" transform="rotate(30 45 60)" /> <!-- Rose petals --> <circle cx="30" cy="15" r="6" fill="#d4af37" /> <circle cx="25" cy="12" r="5" fill="#d4af37" /> <circle cx="35" cy="12" r="5" fill="#d4af37" /> <circle cx="22" cy="18" r="5" fill="#d4af37" /> <circle cx="38" cy="18" r="5" fill="#d4af37" />
+        </svg>
+       </div>
+      </div><!-- Message -->
+      <div class="valentine-subtitle">
+       To the most beautiful soul I know
+      </div><!-- Sparkles -->
+      <div class="sparkle sparkle-1">
+       ✨
+      </div>
+      <div class="sparkle sparkle-2">
+       ✨
+      </div>
+      <div class="sparkle sparkle-3">
+       ✨
+      </div>
+      <div class="sparkle sparkle-4">
+       ✨
+      </div><!-- Final hearts -->
+      <div class="final-hearts">
+       <div class="heart-pulse">
+        💕
+       </div>
+       <div class="heart-pulse" style="animation-delay: 0.2s;">
+        💕
+       </div>
+       <div class="heart-pulse" style="animation-delay: 0.4s;">
+        💕
+       </div>
+      </div><!-- Romantic line -->
+      <div class="romantic-line">
+       Forever Yours ❤️
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
   <script>
-    const zone = document.getElementById("zone");
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const result = document.getElementById("result");
-    const hint = document.getElementById("hint");
+        // Book interaction
+        function openBook(index) {
+            const modal = document.getElementById(`bookContent${index}`);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-    /* ---------- CONFETTI ---------- */
-    const confettiCanvas = document.getElementById("confettiCanvas");
+        function closeBook(index) {
+            const modal = document.getElementById(`bookContent${index}`);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-    function resizeConfettiCanvas() {
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      confettiCanvas.width = Math.floor(window.innerWidth * dpr);
-      confettiCanvas.height = Math.floor(window.innerHeight * dpr);
-      confettiCanvas.style.width = "100vw";
-      confettiCanvas.style.height = "100vh";
-    }
-
-    resizeConfettiCanvas();
-    window.addEventListener("resize", resizeConfettiCanvas);
-    window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
-
-    const confettiInstance = confetti.create(confettiCanvas, {
-      resize: false,
-      useWorker: true
-    });
-
-    function fullScreenConfetti() {
-      const end = Date.now() + 1600;
-
-      (function frame() {
-        confettiInstance({
-          particleCount: 12,
-          spread: 90,
-          startVelocity: 45,
-          ticks: 180,
-          origin: { x: Math.random(), y: Math.random() * 0.3 }
+        // Bookshelf click handlers
+        document.querySelectorAll('.book-item').forEach((book, index) => {
+            book.addEventListener('click', () => openBook(index));
         });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
 
-      setTimeout(() => {
-        confettiInstance({
-          particleCount: 300,
-          spread: 140,
-          startVelocity: 60,
-          ticks: 220,
-          origin: { x: 0.5, y: 0.55 }
+        // Close modal on backdrop click
+        document.querySelectorAll('.book-content').forEach((modal, index) => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeBook(index);
+                }
+            });
         });
-      }, 300);
-    }
 
-    /* ---------- YES BUTTON GROWS ---------- */
-    let yesScale = 1;
-    function growYes() {
-      yesScale = Math.min(2.2, yesScale + 0.1);
-      yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
-    }
+        // Quiz functionality
+        let quizAnswers = [2, 1, 0, 0, 0]; // Correct answers indices
 
-    /* ---------- NO BUTTON RUNS AWAY ---------- */
-    function clamp(n, min, max) {
-      return Math.max(min, Math.min(max, n));
-    }
+        function selectAnswer(element, questionIndex) {
+            const options = element.parentElement.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
 
-    function moveNo(px, py) {
-      const z = zone.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
+            // Check if all answered
+            const allAnswered = document.querySelectorAll('.quiz-option.selected').length === 5;
+            if (allAnswered) {
+                setTimeout(showQuizResult, 500);
+            }
+        }
 
-      let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
-      let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag;
-      dy /= mag;
+        function showQuizResult() {
+            const result = document.getElementById('quizResult');
+            result.classList.add('show');
+        }
 
-      let newLeft = (b.left - z.left) + dx * 150;
-      let newTop  = (b.top - z.top) + dy * 150;
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
 
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
-
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none";
-
-      growYes();
-    }
-
-    zone.addEventListener("pointermove", e => {
-      const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot(
-        (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
-      );
-      if (d < 140) moveNo(e.clientX, e.clientY);
-    });
-
-    noBtn.addEventListener("click", e => e.preventDefault());
-
-    /* ---------- YES CLICK ---------- */
-    yesBtn.addEventListener("click", () => {
-      zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
-      result.style.display = "block";
-      resizeConfettiCanvas();
-      fullScreenConfetti();
-    });
-  </script>
-</body>
+        // Add staggered animation delays to bookshelf items
+        const bookItems = document.querySelectorAll('.book-item');
+        bookItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.15}s`;
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cd7327156aff586',t:'MTc3MTAxNTgxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
-
